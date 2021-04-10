@@ -104,3 +104,43 @@ $calculate = new CalculateCommissions($transactionCollections, $currencyCollecti
 $calculate->generateCommission();
 $calculate->getFeesInHorizontally();
 ```
+
+###For extends new types of commissions
+
+**Step 1:**
+Create a new class in ```src/Commission/CommissionTypes/``` directory
+
+```php
+namespace Fahim\CommissionTask\Commission\CommissionTypes;
+
+use Fahim\CommissionTask\Commission\CommissionInterface;
+use Fahim\CommissionTask\Service\Func;
+
+/**
+ * Commission calculate for all deposit
+ */
+class CommissionForNewUserDeposit extends CommissionTypeBase implements CommissionInterface
+{
+    private const COMMISSION_RATE = 0.00;
+
+    public function calculate()
+    {
+        return Func::getPercentage($this->transaction->getAmount(), self::COMMISSION_RATE);
+    }
+}
+
+```
+
+**Step 2:**
+Map the class in ```src/Commission/CommissionAbstract``` based on user type and operation type 
+
+```php
+protected $classMapper = [
+        'private_deposit' => CommissionForDeposit::class,
+        'business_deposit' => CommissionForDeposit::class,
+        'business_withdraw' => CommissionForBusinessWithdraw::class,
+        'private_withdraw' => CommissionForPrivateWithDraw::class,
+        'newuser_deposit' => CommissionForNewUserDeposit::class,
+    ];
+```
+

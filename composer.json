@@ -1,5 +1,6 @@
 {
     "name": "fahim/commission-task",
+    "version": "0.0.1",
     "description": "recruitment home task",
     "keywords": [],
     "type": "project",
@@ -29,6 +30,9 @@
         "phpunit": "phpunit",
         "fix-cs": "php-cs-fixer fix",
         "test-cs": "php-cs-fixer fix --dry-run -v",
-        "test": ["@phpunit", "@test-cs"]
+        "test": [
+            "@phpunit",
+            "@test-cs"
+        ]
     }
 }
